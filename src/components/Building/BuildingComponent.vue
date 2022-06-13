@@ -1,5 +1,5 @@
 <template>
-    <v-card class="rounded-lg ml-5 mb-3 d-inline-block" @click="focus()" @dblclick="doubleClick()" color="#1B2027" :width="width" height="147px">
+    <v-card class="rounded-lg ml-6 mb-3 d-inline-block" @click="focus()" @dblclick="doubleClick()" color="#1B2027" :width="width" height="147px">
       <v-container class="pa-0 ma-0">
         <v-row>
           <v-col cols="5">

@@ -1,5 +1,5 @@
 <template>
-    <v-card class="rounded-lg pa-5 mr-5 ml-3" color="#1B2027" height="100%">
+    <v-card class="rounded-lg pa-5 ml-3" color="#1B2027" height="100%">
         <div class="d-flex justify-space-between mb-4">
             <h2 id="edit-title">Chỉnh sửa công trình</h2>
             <div class="d-flex justify-end">

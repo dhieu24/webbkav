@@ -6,7 +6,7 @@
                 <v-container fluid class="mt-2 pa-0 mr-0">
                     <v-row no-gutters class="d-flex justify-space-between pa-0 ma-0">
                         <h2 class="mb-4 ml-8 current-building-name">Quản Lý Công Trình</h2>
-                        <div class="d-flex justify-end mr-3">
+                        <div class="d-flex justify-end mr-6">
                             <SearchInput class="mr-4" placeholder="Nhập tên tòa nhà"></SearchInput>
                             <div @click="resetCurrentBuilding()">
                                  <AddDialog></AddDialog>
@@ -14,8 +14,8 @@
                         </div>
                     </v-row>
                     
-                    <v-row no-gutters class="pa-0 ma-0">
-                        <v-col :cols="this.buildingCols" class="pa-0 ma-0 d-flex justify-center flex-wrap">
+                    <v-row no-gutters class="pa-0 mr-5">
+                        <v-col :cols="this.buildingCols" class="pa-0 ma-0 d-flex justify-space-around flex-wrap">
                             <!-- <v-container> -->
                                 <!-- <v-row no-gutters> -->
                                     <BuildingComponent @doubleclick="test($event)" v-for="building in buildings" 
