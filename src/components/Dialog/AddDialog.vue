@@ -1,5 +1,5 @@
 <template>
-    <v-btn color="primary rounded-lg mr-4 mt-2" dark tile height="65%" id="dialog-btn">
+    <v-btn color="primary rounded-lg" dark tile height="65%">
         Thêm Công Trình
     </v-btn>
 </template>

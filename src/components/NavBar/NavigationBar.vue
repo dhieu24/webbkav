@@ -1,5 +1,5 @@
 <template>
-  <v-system-bar app class="pa-0" color="primary">
+  <v-app-bar clipped-left app class="pa-0" color="#1B2027">
         <v-tabs>
            <v-tab v-for="header in headers" :key="header.icon">
             <v-icon>
@@ -9,13 +9,13 @@
 
           <v-spacer></v-spacer>
 
-          <v-btn depressed v-for="control in controls" :key="control.icon">
+          <v-btn depressed v-for="control in controls" :key="control.icon" color="#1B2027" height="100%">
             <v-icon>
               {{control.icon}}
             </v-icon>
           </v-btn>
         </v-tabs>
-    </v-system-bar>    
+    </v-app-bar>    
 </template>
 
 <script>

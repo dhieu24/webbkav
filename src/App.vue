@@ -1,7 +1,5 @@
 <template>
-    <div id="app">
-        <BuildingTemplate></BuildingTemplate>
-    </div>
+    <BuildingTemplate></BuildingTemplate>
 </template>
 
 <script>
@@ -20,7 +18,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
 }
 
 </style>

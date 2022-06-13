@@ -1,16 +1,18 @@
 <template>
-    <v-card class="rounded-lg pa-5 mr-1" color="#1B2027" height="100%">
+    <v-card class="rounded-lg pa-5 mr-5 ml-3" color="#1B2027" height="100%">
         <div class="d-flex justify-space-between mb-4">
-            <h2 id="edit-title" class="d-inline">Chỉnh sửa công trình</h2>
-            <v-btn depressed class="d-inline pa-0" color="#1B2027" v-on:click="closeEdit">
-                <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn depressed class="d-inline pa-0" color="#1B2027" v-on:click="remove">
-                <v-icon>mdi-delete</v-icon>
-            </v-btn>
-            <v-btn depressed class="d-inline pa-0" color="#1B2027" v-on:click="closeEdit">
-                <v-icon>mdi-close</v-icon>
-            </v-btn>
+            <h2 id="edit-title">Chỉnh sửa công trình</h2>
+            <div class="d-flex justify-end">
+                <v-btn v-if="this.isNotAdding" depressed class="d-inline pa-0" color="#1B2027" v-on:click="closeEdit">
+                    <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn v-if="this.isNotAdding" depressed class="d-inline pa-0" color="#1B2027" v-on:click="toggleDialog()">
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+                <v-btn depressed class="d-inline pa-0" color="#1B2027" v-on:click="closeEdit">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+            </div>  
         </div>
         <div v-if="this.isNotAdding">
             <h5 class="text-left">Icon: </h5>
@@ -34,7 +36,8 @@
             </v-btn>
         </div>
         <div v-if="this.dialog">
-            <DialogBox :dialog="dialog"></DialogBox>
+            <DialogBox @remove="remove()" @cancel="toggleDialog()"
+             v-on="$listeners"></DialogBox>
         </div>
     </v-card>
 </template>
@@ -67,7 +70,10 @@ export default {
             this.$emit('input', value)
         },
         remove: function(){
-            this.dialog = true;
+            this.toggleDialog();
+        },
+        toggleDialog: function(){
+            this.dialog = !this.dialog;
         }
     },
 }

@@ -1,32 +1,43 @@
 <template>
   <v-row justify="center">
     <v-dialog
-      :value="value"
-      @input="toggle($event)"
+      value=true
       persistent
-      max-width="290"
+      max-width="400px"
+      color="#1B2027"
     >
-      <v-card>
-        <v-card-title class="text-h5">
-          Use Google's location service?
-        </v-card-title>
-        <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
+      <v-card class="rounded-lg" color="#1B2027" height="280px" elevation="10" justify="center">
+        <div class="d-flex justify-end" color="#76828B">
+          <v-icon @click="cancel()" class="mr-2 mt-1 close-btn" width="24px" height="24px">mdi-close</v-icon>
+        </div>
+        <div class="d-flex justify-center" style="height: 62px">
+          <v-icon x-large color="#FF0E40">mdi-delete</v-icon>
+        </div>
+        <div width="198px" height="18px">
+          <v-card-text class="dialog-message text-center">Bạn muốn xóa chú?</v-card-text>
+        </div>
+        <v-card-actions class="d-flex justify-space-around">
           <v-btn
-            color="green darken-1"
-            text
+            color="#283038"
+            @click="cancel()"
+            width="136px"
+            height="40px"
+            class="rounded-lg"
           >
             Hủy
           </v-btn>
           <v-btn
-            color="green darken-1"
-            text
+            color="primary"
+            @click="remove()"
+            width="136px"
+            height="40px"
+            class="rounded-lg"
+            
           >
             Xóa
           </v-btn>
         </v-card-actions>
-      </v-card>
+      </v-card>      
     </v-dialog>
   </v-row>
 </template>
@@ -34,24 +45,27 @@
 <script>
 
 export default {
-    props: ['value'],
-    // data () {
-    //   return {
-    //     dialog: true,
-    //   }
-    // },
     methods: {
-        toggle: function(value){
-            console.log('oh yay')
-            this.$emit('input', value)
+        remove: function(){
+          this.$emit("remove")
         },
-        test: function(){
-            console.log(this.dialog)
+        cancel: function(){
+          this.$emit('cancel')
         }
-    },
-    updated(){
-        console.log(this.dialog)
-    }
-    
+    },    
 }
 </script>
+
+<style scoped>
+.dialog-message{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.close-btn{
+  border: 1px solid #222323;
+}
+</style>
