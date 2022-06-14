@@ -3,69 +3,40 @@
         <NavigationBar></NavigationBar>
         <MenuItem></MenuItem>
         <v-main class="mt-8">
-                <v-container fluid class="mt-2 pa-0 mr-0">
-                    <v-row no-gutters class="d-flex justify-space-between pa-0 ma-0">
-                        <h2 class="mb-4 ml-8 current-building-name">Quản Lý Công Trình</h2>
-                        <div class="d-flex justify-end mr-6">
-                            <SearchInput class="mr-4" placeholder="Nhập tên tòa nhà"></SearchInput>
-                            <div @click="resetCurrentBuilding()">
-                                 <AddDialog></AddDialog>
-                            </div>
+            <v-container fluid class="mt-2 pa-0 mr-0">
+                <v-row no-gutters class="d-flex justify-space-between pa-0 ma-0">
+                    <h2 class="mb-4 ml-8 current-building-name">Quản Lý Công Trình</h2>
+                    <div class="d-flex justify-end mr-6">
+                        <SearchInput class="mr-4" placeholder="Nhập tên tòa nhà"></SearchInput>
+                        <div @click="resetCurrentBuilding()">
+                            <AddDialog></AddDialog>
                         </div>
-                    </v-row>
+                    </div>
+                </v-row>
                     
-                    <v-row no-gutters class="pa-0 mr-5">
-                        <v-col :cols="this.buildingCols" class="pa-0 ma-0 d-flex justify-space-around flex-wrap">
-                            <!-- <v-container> -->
-                                <!-- <v-row no-gutters> -->
-                                    <BuildingComponent @doubleclick="test($event)" v-for="building in buildings" 
-                                        :key="building.index" 
-                                        :title="building.title" 
-                                        :numBuildings="building.numBuildings" 
-                                        :numCameras="building.numCameras"
-                                        :imgSrc="building.imgSrc"
-                                        :width="currentWidth"
-                                        :index="building.index">
-                                    </BuildingComponent>
-                                
-                                <!-- </v-row> -->
-                            <!-- </v-container> -->
-                        </v-col>
+                <v-row no-gutters class="pa-0 mr-5">
+                    <v-col :cols="this.buildingCols" class="pa-0 ma-0 d-flex flex-wrap">
+                        <BuildingComponent @doubleclick="test($event)" v-for="building in buildings" 
+                            :key="building.id" 
+                            :title="building.name" 
+                            :numBuildings="building.numBuildings" 
+                            :numCameras="building.numCameras"
+                            :imgSrc="building.image"
+                            :width="currentWidth"
+                            :index="building.id">
+                        </BuildingComponent>
+                    </v-col>
 
-                        <v-col cols="5" v-if="this.click">
-                            <EditTab v-model="currentBuilding.title" :src="currentBuilding.imgSrc" :isNotAdding="isNotAdding"
+                    <v-col cols="5" v-if="this.click">
+                        <EditTab 
+                            v-model="currentBuilding.name" 
+                            :src="currentBuilding.image" 
+                            :isNotAdding="isNotAdding"
                             @save="update()" @remove="remove()"
-                            ></EditTab>
-                        </v-col>
-                    </v-row>
-
-                    
-                </v-container>
-                <v-container class="pa-0 ma-0" style="background-color: red; max-width: 100%;">
-                     <!-- <v-row no-gutters>
-                        <v-col :cols="this.buildingCols">
-                            <v-container>
-                                <v-row no-gutters>
-                                    <BuildingComponent @doubleclick="test($event)" v-for="(building, index) in buildings" 
-                                        :key="index" 
-                                        :title="building.title" 
-                                        :numBuildings="building.numBuildings" 
-                                        :numCameras="building.numCameras"
-                                        :imgSrc="building.imgSrc"
-                                        :width="currentWidth"
-                                        :index="index">
-                                    </BuildingComponent>
-                                </v-row>
-                            </v-container>
-                        </v-col>
-
-                        <v-col cols="5" v-if="this.click">
-                            <EditTab v-model="currentBuilding.title" :src="currentBuilding.imgSrc" :isNotAdding="isNotAdding"
-                            @save="update()" @remove="remove()"
-                            ></EditTab>
-                        </v-col>
-                    </v-row> -->
-                </v-container>
+                        ></EditTab>
+                    </v-col>
+                </v-row>   
+            </v-container>
         </v-main>
     </v-app>
 </template>
@@ -78,6 +49,7 @@ import NavigationBar from '../NavBar/NavigationBar.vue'
 import AddDialog from '../Dialog/AddDialog.vue'
 import EditTab from '../Edit/EditTab.vue'
 import {EventBus} from '../../main.js'
+import axios from 'axios';
 
 export default {
     data: () => ({
@@ -87,140 +59,13 @@ export default {
         currentWidth: "31.5%",
         isNotAdding: true,
         currentBuilding: {
-            title: "",
+            name: "",
             numBuildings: "",
             numCameras: "",
-            imgSrc: "",
-            index: -1
+            image: "",
+            id: -1
         },
-        buildings: [
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 0
-            },
-            {
-                title: "Học Viện Ngân Hàng",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 1
-            },
-            {
-                title: "Đại Học Ngoại Thương",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 2
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 3
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 4
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 5
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 6
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 7
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 8
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 9
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 10
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 11
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 12
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 13
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 14
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 15
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 16
-            },
-            {
-                title: "Học Viện Công Nghệ Bưu Chính Viễn Thông",
-                numBuildings: "3",
-                numCameras: "24",
-                imgSrc: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                index: 17
-            }
-        ],
+        buildings: [],
     }),
     components: {
         BuildingComponent,
@@ -259,27 +104,44 @@ export default {
             }
         },
         remove(){
-            if(this.currentBuilding.index > -1){
-                this.buildings.splice(this.currentBuilding.index, 1)
+            console.log(this.currentBuilding.id)
+            if(this.currentBuilding.id > -1){
+                console.log(this.currentBuilding.id)
+                this.buildings.splice(this.currentBuilding.id, 1)
                 this.resetCurrentBuilding()
                 this.reduceTemplateSize()
             }
+            console.log(this.buildings)
         },
         test(index){
             alert(index)
+            console.log(this.buildings)
         }
     },
     mounted () {
-      EventBus.$on('focusBuilding', (data) => {
+        const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCa2F2Q29ycG9yYXRpb24iLCJpYXQiOjE2NTUxOTgxNTgsImV4cCI6MTkxNDM5ODE1OCwidXNlciI6ImFkbWluIiwidHlwZSI6ImFjY2VzcyIsInNlY3VyZSI6ImV5SnBkaUk2SW5OSE0wcHFjM2xWVWxsSldqQktkVkZrWTBsTVNrRTlQU0lzSW5aaGJIVmxJam9pTVZSSGVrSnBMMDh5TTBadUwyUjZkSGhCTjNST04xVm1NVGgzYWtOeFRXbDNNWGRuVjFkamRGbFNhV1U1UTBkNVNERlNSRWxOTld4SWVYaFNUWFl6YWtsUU55OW5VMVJ1U0U5VGRrd3pkRkY1UjA4d2JVSkZTazA1YlVzd1VsVkhaSGxCUzFOdVRsazFObkJaVGtSR1VYUkNXaTlMU1dZNFdEUTFPRWh2Y1cxdFQzQXZUV0ZwWlZOUFRYbGxhRlJsTm1zeFpVVlFkRXRhVEdzeGJVb3dXVzAyYUc1SE4yRlFhVmRyVEVkbWVYcHVlbVk1U2xNNFlWb3hPR1JqY2xWTVRXSnhTalV6S3poa2IzcGFXRkZHZUd4aFVGQnJVVDA5SWl3aWJXRmpJam9pWW1JM09ESTVaR1kwTXpVM05EZ3lZalpqWTJFek1USXhPVGhtWm1FeFpEZGtaRFl6TXpBMU1EVTFPV1JoWVRkaE9HUXdZMkkyTVdVek9HTTBPV1ptTmlJc0luUmhaeUk2SWlKOSJ9.0W_o_3bqJ3KcM7Cx8w84tyhHS5u0F3KEwhbKzgzXwck'
+        const fetchBuilding = axios.create({
+            baseURL: 'https://vms.hcdt.vn:20003',
+            headers: {'authorization': 'Bearer ' + token}
+        })
+
+        fetchBuilding.get('/vms/api/ground/groups').then(res => {
+            this.buildings = res.data
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    EventBus.$on('focusBuilding', (data) => {
+        console.log(this.currentBuilding)
         if(!this.isNotAdding){
             this.isNotAdding = true
         }
-        this.currentBuilding.index = data.currentIndex;
-        this.currentBuilding.title = data.name;
-        this.currentBuilding.imgSrc = data.src
+        this.currentBuilding.id = data.currentIndex;
+        this.currentBuilding.name = data.name;
+        this.currentBuilding.image = data.src
         this.enlargeTemplate();
       });
-      EventBus.$on('closeEdit', () => {
+    EventBus.$on('closeEdit', () => {
         if(!this.isNotAdding){
             this.isNotAdding = true
         }
