@@ -6,7 +6,7 @@
       max-width="400px"
       color="#1B2027"
     >
-      <v-card class="rounded-lg" color="#1B2027" height="280px" elevation="10" justify="center">
+      <v-card class="rounded-lg" color="#1B2027" height="280px" elevation="10">
         <div class="d-flex justify-end" color="#76828B">
           <v-icon @click="cancel()" class="mr-2 mt-1 close-btn" width="24px" height="24px">mdi-close</v-icon>
         </div>
@@ -36,7 +36,7 @@
           >
             Xóa
           </v-btn>
-        </v-card-actions>
+        </v-card-actions>        
       </v-card>      
     </v-dialog>
   </v-row>

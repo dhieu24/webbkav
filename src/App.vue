@@ -1,15 +1,11 @@
 <template>
-    <BuildingTemplate></BuildingTemplate>
+    <router-view></router-view>
 </template>
 
 <script>
-import BuildingTemplate from './components/Building/BuildingTemplate.vue'
 
 export default {
   name: 'App',
-  components: {
-    BuildingTemplate,
-  }
 }
 </script>
 
